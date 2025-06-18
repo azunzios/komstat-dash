@@ -1,0 +1,89 @@
+---
+title: "Komputasi Statistik P10"
+author: "Narangga Khoirul Utama"
+date: "`r Sys.Date()`"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+Nama (Nomor) : Narangga Khoirul Utama (30)
+
+NIM/ Kelas : 222313288/ 2KS1
+
+------------------------------------------------------------------------
+
+### Penugasan Praktikum P10 Komputasi Statistik    
+
+Soal:\
+Lakukan uji proporsi pada satu dan dua populasi dengan contoh Anda
+sendiri. Setelah itu gunakan data “data_kabkota.csv” pada folder Data
+untuk memeriksa kesesuaian sebaran datanya (kenormalan) dengan
+menggunakan Shapiro-Wilk dan Lilliefors.
+
+Jawab:
+
+#### Uji Proporsi Satu Populasi  
+
+Misalnya: dalam survei yang dilakukan terhadap 200 warga, sebanyak 126
+di antaranya menyatakan puas terhadap pelayanan pemerintah daerah. Uji
+apakah proporsi kepuasan lebih dari 60%?
+
+$H_0: p \le 0.6$ (proporsi kepuasan maksimal 60%)
+
+$H_1: p> 0.6$ (proporsi kepuasan lebih dari 60%)
+
+$\alpha=0.05$
+
+```{r}
+prop.test(126, 200, p=0.6, alternative="greater", correct = FALSE)
+```
+
+Pada tingkat signifikansi 0.05, dihasilkan keputusan gagal tolak $H_0$
+karena p-value lebih dari 0.05, sehingga tidak terbukti bahwa proporsi
+kepuasan \> 60%.
+
+#### Uji Proporsi Dua Populasi   
+
+Di Kabupaten A: 80 dari 150 warga puas.
+
+Di Kabupaten B: 70 dari 160 warga puas.
+
+Apakah ada perbedaan signifikan antara proporsi kepuasan dua kabupaten
+tersebut?
+
+$H_0: p_1 = p_2$
+
+$H_1: p_1 \neq p_2$
+
+```{r}
+prop.test(c(80, 70), c(150, 160), alternative = "two.sided", correct = FALSE)
+```
+
+Pada tingkat signifikansi 5%, karena p-value (0.09154) lebih dari
+$\alpha(0.05)$, maka menghasilkan gagal tolak $H_0$
+
+#### Uji Normalitas  
+
+```{r}
+library(nortest)
+data <- read.csv("data_kabkota.csv", header = TRUE, sep = ",")
+head(data)
+shapiro.test(data$PKP_2020)
+lillie.test(data$PKP_2020)
+```
+
+Hipotesis:
+
+$H_0:$ Data berdistribusi normal
+
+$H_1$ : Data tidak berdistribusi normal
+
+$\alpha = 0.05$
+
+Keputusan:
+
+Didapatkan p-value kurang dari $\alpha$ maka maka keputusannya adalah
+tolak $H_0$. Sehingga data berdistribusi tidak normal pada tingkat
+signifikansi 0.05.
