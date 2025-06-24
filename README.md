@@ -1,4 +1,5 @@
-# Perhatian
+# INI MERUPAKAN VERSI 1 SVELTE DAN SHADCNUI-SVELTE
+# Perhatian 
 Pakai shadcnui-svelte dan backendnya pakai R
 # sv
 
